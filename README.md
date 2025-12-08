@@ -1,7 +1,7 @@
 # contributions-status
 
 A web application that integrates GitHub and GitLab contribution data and generates a 365-day contribution graph image.  
-[![Contributions Graph](https://contributions-status-server.vercel.app/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=gitlab)](https://contributions-status-server.vercel.app)
+[![Contributions Graph](https://contributions-status-server.vercel.app/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=gitlab)](https://contributions-status.vercel.app)
 
 ## Features
 
