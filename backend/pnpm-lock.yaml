@@ -11,6 +11,9 @@ importers:
       '@napi-rs/canvas':
         specifier: ^0.1.84
         version: 0.1.84
+      '@types/express':
+        specifier: ^5.0.6
+        version: 5.0.6
       axios:
         specifier: ^1.13.2
         version: 1.13.2
@@ -24,9 +27,6 @@ importers:
       '@types/cors':
         specifier: ^2.8.19
         version: 2.8.19
-      '@types/express':
-        specifier: ^5.0.6
-        version: 5.0.6
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
