@@ -1,61 +1,61 @@
 # contributions-status
 
-GitHubとGitLabのcontributionデータを統合して、365日分のグラフ画像を生成するWebアプリケーションです。  
+A web application that integrates GitHub and GitLab contribution data and generates a 365-day contribution graph image.  
 [![Contributions Graph](https://contributions-status-server.vercel.app/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=gitlab)](https://contributions-status-server.vercel.app)
 
-## 機能
+## Features
 
-- GitHubとGitLabのcontributionデータを統合表示
-- 7種類のテーマ（default, gitlab, blue, purple, orange, red, pink）
-- 365日分のcontributionグラフを画像として生成
+- Integrates and displays contributions from both GitHub and GitLab
+- Supports 7 themes (default, gitlab, blue, purple, orange, red, pink)
+- Generates a 365-day contribution graph as an image
 
-## 技術スタック
+## Tech Stack
 
 ### フロントエンド
 - React 19
 - Vite
 - Tailwind CSS
 
-### バックエンド
+### Backend
 - Node.js
 - Express 5
 - TypeScript
-- @napi-rs/canvas（画像生成）
+- @napi-rs/canvas (for image generation)
 
-## API エンドポイント
+## API Endpoint
 
 ### GET /api/contributions
 
-GitHubとGitLabのcontributionを統合した365日のグラフ画像を返します。
+Returns a 365-day contribution graph image combining GitHub and GitLab contributions.
 
 #### クエリパラメータ
 
-- `github` (オプション): GitHubのユーザー名
-- `gitlab` (オプション): GitLabのユーザー名
-- `theme` (オプション): テーマ（default, gitlab, blue, purple, orange, red, pink）デフォルトは`default`
+- `github` (optional): GitHub username
+- `gitlab` (optional): GitLab username
+- `theme` (optional): Theme (default, gitlab, blue, purple, orange, red, pink). Default is `default`
 
-**注意**: `github`と`gitlab`の少なくとも一方は必須です。
+**Note**: At least one of `github` or `gitlab` is required.
 
-#### 使用例
+#### Example
 
 ```
 GET https://contributions-status-server.vercel.app/api/contributions?github=T4ko0522&gitlab=T4ko0522&theme=pink
 ```
 
-#### レスポンス
+#### Response
 
 - Content-Type: `image/png`
-- Cache-Control: `public, max-age=3600` (1時間キャッシュ)
+- Cache-Control: `public, max-age=3600` (1 hour cache)
 
-## ライセンス
+## License
 
-このプロジェクトは [Apache License 2.0](LICENSE) の下で公開されています。
+This project is licensed under the [Apache License 2.0](LICENSE)
 
-## 作者
+## Author
 
-T4ko0522
+[T4ko0522](https://x.com/T4ko0522)
 
 ## リンク
 
 - [GitHub Repository](https://github.com/T4ko0522/contributions-status)
-- [デモサイト](https://contributions-status.vercel.app/)
+- [Demo Site](https://contributions-status.vercel.app/)
