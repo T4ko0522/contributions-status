@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx watch index.ts",
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.8.1",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.84",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.1.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  }
+}
