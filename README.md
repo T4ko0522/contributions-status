@@ -39,7 +39,7 @@ GitHubとGitLabのcontributionを統合した365日のグラフ画像を返し�
 #### 使用例
 
 ```
-GET /api/contributions?github=T4ko0522&gitlab=T4ko0522&theme=pink
+GET https://contributions-status-server.vercel.app/api/contributions?github=T4ko0522&gitlab=T4ko0522&theme=pink
 ```
 
 #### レスポンス
