@@ -1,11 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import type { Express } from 'express';
 import express from 'express';
 import request from 'supertest';
 import contributions from './contributions.js';
 
 describe('Contributions API', () => {
-  let app: Express;
+  let app: ReturnType<typeof express>;
 
   beforeEach(() => {
     app = express();
