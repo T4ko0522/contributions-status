@@ -1,4 +1,5 @@
-import { createCanvas, type CanvasRenderingContext2D } from '@napi-rs/canvas';
+import { createCanvas } from '@napi-rs/canvas';
+import type { CanvasRenderingContext2D } from '@napi-rs/canvas';
 
 interface ContributionData {
   date: string;

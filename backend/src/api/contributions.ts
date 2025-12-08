@@ -1,4 +1,5 @@
-import express, { type Request, type Response, type Router } from 'express';
+import express from 'express';
+import type { Request, Response, Router } from 'express';
 import githubService from '../services/githubService.js';
 import gitlabService from '../services/gitlabService.js';
 import graphGenerator from '../services/graphGenerator.js';

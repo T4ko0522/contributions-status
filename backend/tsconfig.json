@@ -10,6 +10,7 @@
     "module": "nodenext",
     "target": "esnext",
     "lib": ["esnext"],
+    "types": ["node"],
 
     // Other Outputs
     "sourceMap": true,
@@ -30,7 +31,6 @@
 
     // Recommended Options
     "strict": true,
-    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
