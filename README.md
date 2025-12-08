@@ -8,7 +8,6 @@ GitHubとGitLabのcontributionデータを統合して、365日分のグラフ�
 - GitHubとGitLabのcontributionデータを統合表示
 - 7種類のテーマ（default, gitlab, blue, purple, orange, red, pink）
 - 365日分のcontributionグラフを画像として生成
-- リアルタイムでのバックエンドステータス確認
 
 ## 技術スタック
 
@@ -59,4 +58,4 @@ T4ko0522
 ## リンク
 
 - [GitHub Repository](https://github.com/T4ko0522/contributions-status)
-- [デモサイト](https://contributions-status-server.vercel.app/)
+- [デモサイト](https://contributions-status.vercel.app/)
