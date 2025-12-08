@@ -5,6 +5,7 @@ import warningIcon from './assets/warning.svg'
 import gitlabIcon from './assets/gitlab.png'
 import redirectIcon from './assets/redirect.svg'
 import portfolioIcon from './assets/portfolio.png'
+import repositoryIcon from './assets/github-mark-white.png'
 
 function App() {
   const [status, setStatus] = useState('loading')
@@ -56,15 +57,25 @@ function App() {
         <>
           <p style={{ color: '#00ff88' }}>contributions-status is Working!</p>
           <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-            <img 
-              src={graphUrl} 
-              alt="Contributions Graph" 
+            <a 
+              href="https://contributions-status-server.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ 
-                maxWidth: '100%', 
-                height: 'auto',
-                borderRadius: '8px'
+                cursor: 'pointer',
+                display: 'inline-block'
               }}
-            />
+            >
+              <img 
+                src={graphUrl} 
+                alt="Contributions Graph" 
+                style={{ 
+                  maxWidth: '100%', 
+                  height: 'auto',
+                  borderRadius: '8px'
+                }}
+              />
+            </a>
           </div>
         </>
       )}
@@ -150,6 +161,19 @@ function App() {
               style={{ display: 'block', borderRadius: '50%', objectFit: 'cover' }}
             />
             github.com/T4ko0522
+          </button>
+          <button 
+            onClick={() => window.location.href = 'https://github.com/T4ko0522/contributions-status'}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <img 
+              src={repositoryIcon} 
+              alt="GitHub Repository" 
+              width="22" 
+              height="22"
+              style={{ display: 'block', borderRadius: '50%', objectFit: 'cover' }}
+            />
+            Repository
           </button>
         </div>
       </div>
