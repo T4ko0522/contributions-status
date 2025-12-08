@@ -1,0 +1,16 @@
+{
+  "name": "git-activity",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "back": "cd backend && pnpm start",
+    "front": "cd frontend && pnpm dev",
+    "start": "concurrently \"pnpm back\" \"pnpm front\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}
