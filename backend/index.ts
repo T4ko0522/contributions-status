@@ -1,10 +1,10 @@
 import 'dotenv/config';
-import express, { type Request, type Response, type Express } from 'express';
+import express, { type Request, type Response } from 'express';
 import axios from 'axios';
 import cors from 'cors';
 import contributions from './src/api/contributions.js';
 
-const app: Express = express();
+const app = express();
 const port: number = Number(process.env.PORT) || 3000;
 
 app.use(
