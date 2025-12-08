@@ -11,7 +11,7 @@ A web application that integrates GitHub and GitLab contribution data and genera
 
 ## Tech Stack
 
-### フロントエンド
+### Frontend
 - React 19
 - Vite
 - Tailwind CSS
