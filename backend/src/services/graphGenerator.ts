@@ -79,6 +79,11 @@ function formatLocal(date: Date): string {
   return jstDate.toISOString().split('T')[0] ?? '';
 }
 
+function getDayJST(date: Date): number {
+  const jst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  return jst.getUTCDay();
+}
+
 class GraphGenerator {
   private readonly SQUARE_SIZE = 11;
   private readonly SQUARE_GAP = 2;
@@ -165,7 +170,7 @@ class GraphGenerator {
     // データを週ごとに整理（日曜日から始まる）
     const weeks: (ContributionDay | null)[][] = [];
     let currentWeek: (ContributionDay | null)[] = [];
-    let firstDayOfWeek = contributions[0]?.date.getDay() ?? 0; // 最初の日の曜日
+    let firstDayOfWeek = getDayJST(contributions[0]?.date) ?? 0;
 
     // 最初の週の前に空の日を追加
     for (let i = 0; i < firstDayOfWeek; i++) {
