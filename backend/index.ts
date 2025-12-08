@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import express, { type Request, type Response } from 'express';
-import axios from 'axios';
+import express, { type Request, type Response, type Express } from 'express';
 import cors from 'cors';
 import contributions from './src/api/contributions.js';
 
-const app = express();
+const app: Express = express();
 const port: number = Number(process.env.PORT) || 3000;
 
 app.use(
@@ -22,6 +21,6 @@ app.get('/', (req: Request, res: Response): void => {
 app.use('/api/contributions', contributions);
 
 app.listen(port, (): void => {
-  console.log(`backend is listening at http://localhost:${port}`);
+  console.log(`backend is listening`);
 });
 
