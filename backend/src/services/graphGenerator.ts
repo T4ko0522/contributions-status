@@ -1,5 +1,9 @@
-import { createCanvas } from '@napi-rs/canvas';
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import type { CanvasRenderingContext2D } from '@napi-rs/canvas';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { existsSync } from 'fs';
 
 interface ContributionData {
   date: string;
@@ -82,6 +86,23 @@ function formatLocal(date: Date): string {
 function getDayJST(date: Date): number {
   const jst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
   return jst.getUTCDay();
+}
+
+// フォントを登録（サーバーレス環境でフォントが利用できるように）
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// フォントファイルが存在する場合のみ登録
+const fontPath = join(__dirname, '../../fonts/NotoSans-Regular.ttf');
+if (existsSync(fontPath)) {
+  try {
+    GlobalFonts.registerFromPath(fontPath, 'Noto Sans');
+    console.log('Font registered successfully: Noto Sans');
+  } catch (error) {
+    console.error('Failed to register font:', error);
+  }
+} else {
+  console.warn(`Font file not found at ${fontPath}, using default font`);
 }
 
 class GraphGenerator {
@@ -199,7 +220,7 @@ class GraphGenerator {
 
     // 曜日ラベルを左側に縦に表示
     ctx.fillStyle = '#8b949e';
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px "Noto Sans", sans-serif';
     const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const dayLabelX = this.PADDING + 35; // グラフに近づける
     
@@ -250,7 +271,7 @@ class GraphGenerator {
 
     // 月のラベルを追加
     ctx.fillStyle = '#8b949e';
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px "Noto Sans", sans-serif';
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthLabelY = this.PADDING - 5;
     
