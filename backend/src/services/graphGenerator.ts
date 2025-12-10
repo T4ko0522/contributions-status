@@ -194,7 +194,7 @@ class GraphGenerator {
 
     // キャンバスサイズを計算
     const width = this.WEEKS * (this.SQUARE_SIZE + this.SQUARE_GAP) + this.PADDING * 2 + 50; // 50は曜日ラベル用
-    const height = this.DAYS_PER_WEEK * (this.SQUARE_SIZE + this.SQUARE_GAP) + this.PADDING * 2 + 30; // 30は月ラベル用
+    const height = this.DAYS_PER_WEEK * (this.SQUARE_SIZE + this.SQUARE_GAP) + this.PADDING * 2 + 50; // 50は月ラベルと合計数表示用
 
     const canvas = createCanvas(width, height);
     const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
@@ -316,6 +316,16 @@ class GraphGenerator {
       }
     }
 
+    // 過去1年間の合計contribution数を計算
+    const totalContributions = contributions.reduce((sum, contribution) => {
+      const contributionDateStr = formatLocal(contribution.date);
+      // 今日までの日付のみをカウント
+      if (contributionDateStr < tomorrowStr) {
+        return sum + contribution.count;
+      }
+      return sum;
+    }, 0);
+
     // 凡例を追加
     const legendY = height - 20;
     const legendX = width - 150;
@@ -339,6 +349,14 @@ class GraphGenerator {
       ctx.roundRect(legendSquareX, legendY - 10, this.SQUARE_SIZE, this.SQUARE_SIZE, legendRadius);
       ctx.fill();
     }
+
+    // 合計contribution数を左下に表示
+    ctx.fillStyle = '#8b949e';
+    ctx.font = '12px "Noto Sans", sans-serif';
+    const totalText = `${totalContributions.toLocaleString()} contributions in the last year`;
+    const totalTextX = this.PADDING;
+    const totalTextY = legendY + 10;
+    ctx.fillText(totalText, totalTextX, totalTextY);
 
     // PNGとして返す
     return canvas.toBuffer('image/png');
