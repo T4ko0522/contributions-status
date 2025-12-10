@@ -92,17 +92,32 @@ function getDayJST(date: Date): number {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// フォントファイルが存在する場合のみ登録
-const fontPath = join(__dirname, '../../fonts/NotoSans-Regular.ttf');
-if (existsSync(fontPath)) {
-  try {
-    GlobalFonts.registerFromPath(fontPath, 'Noto Sans');
-    console.log('Font registered successfully: Noto Sans');
-  } catch (error) {
-    console.error('Failed to register font:', error);
+// 複数のパスを試してフォントファイルを探す
+const fontPaths = [
+  join(__dirname, '../../fonts/NotoSans-Regular.ttf'), // ローカル開発環境
+  join(process.cwd(), 'fonts/NotoSans-Regular.ttf'), // Vercel環境（プロジェクトルート）
+  join(process.cwd(), 'backend/fonts/NotoSans-Regular.ttf'), // モノレポ構造
+  join(__dirname, '../../../fonts/NotoSans-Regular.ttf'), // 代替パス
+];
+
+let fontRegistered = false;
+for (const fontPath of fontPaths) {
+  if (existsSync(fontPath)) {
+    try {
+      GlobalFonts.registerFromPath(fontPath, 'Noto Sans');
+      console.log(`Font registered successfully from: ${fontPath}`);
+      fontRegistered = true;
+      break;
+    } catch (error) {
+      console.error(`Failed to register font from ${fontPath}:`, error);
+    }
   }
-} else {
-  console.warn(`Font file not found at ${fontPath}, using default font`);
+}
+
+if (!fontRegistered) {
+  console.warn(`Font file not found in any of the following paths:`);
+  fontPaths.forEach(path => console.warn(`  - ${path}`));
+  console.warn('Using default font (text may not render properly)');
 }
 
 class GraphGenerator {
