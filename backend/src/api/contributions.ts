@@ -6,14 +6,14 @@ import graphGenerator from '../services/graphGenerator.js';
 
 const router: Router = express.Router();
 
-type Theme = 'default' | 'gitlab' | 'blue' | 'purple' | 'orange' | 'red' | 'pink';
+type Theme = 'default' | 'gitlab' | 'orange' | 'red' | 'pink';
 
 /**
  * GitHubとGitLabのcontributionを統合した365日のグラフ画像を返す
  * クエリパラメータ:
  * - github: GitHubのユーザー名（オプション）
  * - gitlab: GitLabのユーザー名（オプション）
- * - theme: テーマ（default, gitlab, blue, purple, orange, red, pink）デフォルトはdefault
+ * - theme: テーマ（default, gitlab, orange, red, pink）デフォルトはdefault
  * 注意: githubとgitlabの少なくとも一方は必須
  */
 router.get('/', async (req: Request, res: Response): Promise<void> => {
@@ -27,7 +27,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     }
 
     // テーマの検証
-    const validThemes: Theme[] = ['default', 'gitlab', 'blue', 'purple', 'orange', 'red', 'pink'];
+    const validThemes: Theme[] = ['default', 'gitlab', 'orange', 'red', 'pink'];
     const selectedTheme: Theme =
       theme && typeof theme === 'string' && validThemes.includes(theme as Theme)
         ? (theme as Theme)

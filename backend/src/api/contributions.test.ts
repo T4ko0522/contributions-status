@@ -62,7 +62,7 @@ describe('Contributions API', () => {
   });
 
   it('should accept all valid themes', async () => {
-    const themes = ['default', 'gitlab', 'blue', 'purple', 'orange', 'red', 'pink'];
+    const themes = ['default', 'gitlab', 'orange', 'red', 'pink'];
 
     for (const theme of themes) {
       const response = await request(app)
