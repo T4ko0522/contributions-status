@@ -15,7 +15,7 @@ interface ContributionDay {
   count: number;
 }
 
-type Theme = 'default' | 'gitlab' | 'blue' | 'purple' | 'orange' | 'red' | 'pink';
+type Theme = 'default' | 'gitlab' | 'orange' | 'red' | 'pink';
 
 interface ThemeColors {
   level0: string; // 0回
@@ -39,20 +39,6 @@ const THEMES: Record<Theme, ThemeColors> = {
     level2: '#4e65cd',
     level3: '#7992f5',
     level4: '#d2dcff',
-  },
-  blue: {
-    level0: '#151b23',
-    level1: '#0d1b2a',
-    level2: '#1e3a5f',
-    level3: '#2e5c8a',
-    level4: '#4a90e2',
-  },
-  purple: {
-    level0: '#151b23',
-    level1: '#74325c',
-    level2: '#3d1f5c',
-    level3: '#6b2c91',
-    level4: '#9d4edd',
   },
   orange: {
     level0: '#151b23',
