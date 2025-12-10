@@ -1,12 +1,12 @@
 # contributions-status
 
 A web application that integrates GitHub and GitLab contribution data and generates a 365-day contribution graph image.  
-[![Contributions Graph](https://contributions-status-server.vercel.app/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=gitlab)](https://contributions-status.vercel.app)
+![Contributions Status](assets/screenshot.png)
 
 ## Features
 
 - Integrates and displays contributions from both GitHub and GitLab
-- Supports 7 themes (default, gitlab, blue, purple, orange, red, pink)
+- Supports 5 themes (default, gitlab, orange, red, pink)
 - Generates a 365-day contribution graph as an image
 
 ## Tech Stack
@@ -32,7 +32,7 @@ Returns a 365-day contribution graph image combining GitHub and GitLab contribut
 
 - `github` (optional): GitHub username
 - `gitlab` (optional): GitLab username
-- `theme` (optional): Theme (default, gitlab, blue, purple, orange, red, pink). Default is `default`
+- `theme` (optional): Theme (default, gitlab, orange, red, pink). Default is `default`
 
 **Note**: At least one of `github` or `gitlab` is required.
 
@@ -55,7 +55,7 @@ This project is licensed under the [Apache License 2.0](LICENSE)
 
 [T4ko0522](https://x.com/T4ko0522)
 
-## リンク
+## Link
 
 - [GitHub Repository](https://github.com/T4ko0522/contributions-status)
 - [Demo Site](https://contributions-status.vercel.app/)

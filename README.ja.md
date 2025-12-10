@@ -1,12 +1,12 @@
 # contributions-status
 
 GitHubとGitLabのcontributionデータを統合して、365日分のグラフ画像を生成するWebアプリケーションです。  
-[![Contributions Graph](https://contributions-status-server.vercel.app/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=gitlab)](https://contributions-status.vercel.app)
+![Contributions Status](assets/screenshot.png)
 
 ## 機能
 
 - GitHubとGitLabのcontributionデータを統合表示
-- 7種類のテーマ（default, gitlab, blue, purple, orange, red, pink）
+- 5種類のテーマ（default, gitlab, orange, red, pink）
 - 365日分のcontributionグラフを画像として生成
 
 ## 技術スタック
@@ -32,7 +32,7 @@ GitHubとGitLabのcontributionを統合した365日のグラフ画像を返し�
 
 - `github` (オプション): GitHubのユーザー名
 - `gitlab` (オプション): GitLabのユーザー名
-- `theme` (オプション): テーマ（default, gitlab, blue, purple, orange, red, pink）デフォルトは`default`
+- `theme` (オプション): テーマ（default, gitlab, orange, red, pink）デフォルトは`default`
 
 **注意**: `github`と`gitlab`の少なくとも一方は必須です。
 
