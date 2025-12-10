@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Loader from './loading.jsx'
 import warningIcon from './assets/warning.svg'
 import gitlabIcon from './assets/gitlab.png'
@@ -225,7 +227,7 @@ function App() {
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(generatedUrl)
-                    alert('URL has been copied to the clipboard')
+                    toast.success('URL has been copied to the clipboard')
                   }}
                   style={{
                     marginTop: '8px',
@@ -343,6 +345,18 @@ function App() {
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   )
 }
