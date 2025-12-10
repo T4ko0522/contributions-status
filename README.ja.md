@@ -1,7 +1,11 @@
 # contributions-status
 
 GitHubとGitLabのcontributionデータを統合して、365日分のグラフ画像を生成するWebアプリケーションです。  
-![Contributions Status](assets/screenshot.png)
+
+<div align="center">
+  <img src="assets/screenshot.png" alt="Contributions Status" width="100%">
+  <img src="assets/contributions.png" alt="Contributions Graph" width="100%">
+</div>
 
 ## 機能
 

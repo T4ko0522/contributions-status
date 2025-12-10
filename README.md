@@ -1,7 +1,11 @@
 # contributions-status
 
 A web application that integrates GitHub and GitLab contribution data and generates a 365-day contribution graph image.  
-![Contributions Status](assets/screenshot.png)
+
+<div align="center">
+  <img src="assets/screenshot.png" alt="Contributions Status" width="100%">
+  <img src="assets/contributions.png" alt="Contributions Graph" width="100%">
+</div>
 
 ## Features
 
@@ -28,7 +32,7 @@ A web application that integrates GitHub and GitLab contribution data and genera
 
 Returns a 365-day contribution graph image combining GitHub and GitLab contributions.
 
-#### クエリパラメータ
+#### Query parameters
 
 - `github` (optional): GitHub username
 - `gitlab` (optional): GitLab username
