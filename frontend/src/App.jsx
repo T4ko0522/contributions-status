@@ -10,7 +10,34 @@ import repositoryIcon from './assets/github-mark-white.png'
 function App() {
   const [status, setStatus] = useState('loading')
   const backendUrl = import.meta.env.VITE_BACKEND_URL
-  const graphUrl = `${backendUrl}/api/contributions?gitlab=T4ko0522&github=T4ko0522&theme=pink`
+  
+  // URLパラメータから初期値を取得
+  const searchParams = new URLSearchParams(window.location.search)
+  const initialGithub = searchParams.get('github') || ''
+  const initialGitlab = searchParams.get('gitlab') || ''
+  const initialTheme = searchParams.get('theme') || 'default'
+  
+  const [github, setGithub] = useState(initialGithub)
+  const [gitlab, setGitlab] = useState(initialGitlab)
+  const [theme, setTheme] = useState(initialTheme)
+  const [generatedUrl, setGeneratedUrl] = useState(null)
+  
+  // APIのURLを自動生成
+  const generateGraphUrl = (gh, gl, th) => {
+    const params = new URLSearchParams()
+    if (gh) params.append('github', gh)
+    if (gl) params.append('gitlab', gl)
+    if (th) params.append('theme', th)
+    return `${backendUrl}/api/contributions?${params.toString()}`
+  }
+  
+  // ボタンが押されたときにURLを生成
+  const handleGenerate = () => {
+    if (github || gitlab) {
+      const url = generateGraphUrl(github, gitlab, theme)
+      setGeneratedUrl(url)
+    }
+  }
 
   useEffect(() => {
     const fetchBackendStatus = async () => {
@@ -49,6 +76,8 @@ function App() {
     fetchBackendStatus()
   }, [backendUrl])
 
+  const themes = ['default', 'gitlab', 'orange', 'red', 'pink']
+  
   return (
     <>
       <h1>contributions-status</h1>
@@ -56,33 +85,170 @@ function App() {
       {status === 'success' && (
         <>
           <p style={{ color: '#00ff88' }}>contributions-status is Working!</p>
-          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-            <a 
-              href="https://contributions-status-server.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ 
-                cursor: 'pointer',
-                display: 'inline-block'
-              }}
-            >
-              <img 
-                src={graphUrl} 
-                alt="Contributions Graph" 
-                style={{ 
-                  maxWidth: '100%', 
-                  height: 'auto',
-                  borderRadius: '8px'
+          
+          {/* 入力フォーム */}
+          <div style={{ 
+            marginTop: '20px', 
+            maxWidth: '600px', 
+            margin: '20px auto',
+            padding: '20px',
+            backgroundColor: '#1a1a1a',
+            borderRadius: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '15px'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#8b949e', fontSize: '14px' }}>GitHub Username</label>
+              <input
+                type="text"
+                value={github}
+                onChange={(e) => setGithub(e.target.value)}
+                placeholder="GitHub username"
+                style={{
+                  padding: '8px 12px',
+                  backgroundColor: '#0d1117',
+                  border: '1px solid #30363d',
+                  borderRadius: '6px',
+                  color: '#c9d1d9',
+                  fontSize: '14px'
                 }}
               />
-            </a>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#8b949e', fontSize: '14px' }}>GitLab Username</label>
+              <input
+                type="text"
+                value={gitlab}
+                onChange={(e) => setGitlab(e.target.value)}
+                placeholder="GitLab username"
+                style={{
+                  padding: '8px 12px',
+                  backgroundColor: '#0d1117',
+                  border: '1px solid #30363d',
+                  borderRadius: '6px',
+                  color: '#c9d1d9',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#8b949e', fontSize: '14px' }}>Theme</label>
+              <select
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+                style={{
+                  padding: '8px 12px',
+                  backgroundColor: '#0d1117',
+                  border: '1px solid #30363d',
+                  borderRadius: '6px',
+                  color: '#c9d1d9',
+                  fontSize: '14px',
+                  cursor: 'pointer'
+                }}
+              >
+                {themes.map((t) => (
+                  <option key={t} value={t} style={{ backgroundColor: '#0d1117' }}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* 生成ボタン */}
+            <button
+              onClick={handleGenerate}
+              disabled={!github && !gitlab}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: (github || gitlab) ? '#238636' : '#30363d',
+                border: 'none',
+                borderRadius: '6px',
+                color: '#fff',
+                cursor: (github || gitlab) ? 'pointer' : 'not-allowed',
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '10px',
+                opacity: (github || gitlab) ? 1 : 0.5
+              }}
+            >
+              Generate a Graph
+            </button>
           </div>
+          
+          {/* 画像とURLの表示 */}
+          {generatedUrl && (
+            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <a 
+                  href={generatedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    cursor: 'pointer',
+                    display: 'inline-block'
+                  }}
+                >
+                  <img 
+                    src={generatedUrl} 
+                    alt="Contributions Graph" 
+                    style={{ 
+                      maxWidth: '100%', 
+                      height: 'auto',
+                      borderRadius: '8px',
+                      border: '1px solid #30363d'
+                    }}
+                  />
+                </a>
+              </div>
+              
+              {/* URL表示 */}
+              <div style={{
+                maxWidth: '600px',
+                width: '100%',
+                padding: '12px',
+                backgroundColor: '#0d1117',
+                borderRadius: '6px',
+                border: '1px solid #30363d'
+              }}>
+                <p style={{ color: '#8b949e', fontSize: '12px', margin: '0 0 8px 0' }}>API URL:</p>
+                <code style={{
+                  color: '#58a6ff',
+                  fontSize: '12px',
+                  wordBreak: 'break-all',
+                  display: 'block'
+                }}>
+                  {generatedUrl}
+                </code>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(generatedUrl)
+                    alert('URL has been copied to the clipboard')
+                  }}
+                  style={{
+                    marginTop: '8px',
+                    padding: '6px 12px',
+                    backgroundColor: '#238636',
+                    border: 'none',
+                    borderRadius: '6px',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    fontSize: '12px'
+                  }}
+                >
+                  Copy URL
+                </button>
+              </div>
+            </div>
+          )}
         </>
       )}
       {status === 'error' && (
       <div>
         <p style={{ color: 'red' }}>contributions-status is Not Working...</p>
-        <p>多分バックエンドのサーバーに制限が来てるよ～；；</p>
+        <p>Probably the server of the backend is limited... TT</p>
       </div>
       )}
       <div style={{ 
