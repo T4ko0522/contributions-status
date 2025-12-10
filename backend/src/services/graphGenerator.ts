@@ -1,5 +1,9 @@
-import { createCanvas } from '@napi-rs/canvas';
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import type { CanvasRenderingContext2D } from '@napi-rs/canvas';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { existsSync } from 'fs';
 
 interface ContributionData {
   date: string;
@@ -82,6 +86,38 @@ function formatLocal(date: Date): string {
 function getDayJST(date: Date): number {
   const jst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
   return jst.getUTCDay();
+}
+
+// フォントを登録（サーバーレス環境でフォントが利用できるように）
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// 複数のパスを試してフォントファイルを探す
+const fontPaths = [
+  join(__dirname, '../../fonts/NotoSans-Regular.ttf'), // ローカル開発環境
+  join(process.cwd(), 'fonts/NotoSans-Regular.ttf'), // Vercel環境（プロジェクトルート）
+  join(process.cwd(), 'backend/fonts/NotoSans-Regular.ttf'), // モノレポ構造
+  join(__dirname, '../../../fonts/NotoSans-Regular.ttf'), // 代替パス
+];
+
+let fontRegistered = false;
+for (const fontPath of fontPaths) {
+  if (existsSync(fontPath)) {
+    try {
+      GlobalFonts.registerFromPath(fontPath, 'Noto Sans');
+      console.log(`Font registered successfully from: ${fontPath}`);
+      fontRegistered = true;
+      break;
+    } catch (error) {
+      console.error(`Failed to register font from ${fontPath}:`, error);
+    }
+  }
+}
+
+if (!fontRegistered) {
+  console.warn(`Font file not found in any of the following paths:`);
+  fontPaths.forEach(path => console.warn(`  - ${path}`));
+  console.warn('Using default font (text may not render properly)');
 }
 
 class GraphGenerator {
@@ -170,7 +206,8 @@ class GraphGenerator {
     // データを週ごとに整理（日曜日から始まる）
     const weeks: (ContributionDay | null)[][] = [];
     let currentWeek: (ContributionDay | null)[] = [];
-    let firstDayOfWeek = getDayJST(contributions[0]?.date) ?? 0;
+    const firstContribution = contributions[0];
+    const firstDayOfWeek = firstContribution ? getDayJST(firstContribution.date) : 0;
 
     // 最初の週の前に空の日を追加
     for (let i = 0; i < firstDayOfWeek; i++) {
@@ -198,7 +235,7 @@ class GraphGenerator {
 
     // 曜日ラベルを左側に縦に表示
     ctx.fillStyle = '#8b949e';
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px "Noto Sans", sans-serif';
     const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const dayLabelX = this.PADDING + 35; // グラフに近づける
     
@@ -249,7 +286,7 @@ class GraphGenerator {
 
     // 月のラベルを追加
     ctx.fillStyle = '#8b949e';
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px "Noto Sans", sans-serif';
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthLabelY = this.PADDING - 5;
     
