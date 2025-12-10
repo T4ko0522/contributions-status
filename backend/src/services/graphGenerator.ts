@@ -170,7 +170,8 @@ class GraphGenerator {
     // データを週ごとに整理（日曜日から始まる）
     const weeks: (ContributionDay | null)[][] = [];
     let currentWeek: (ContributionDay | null)[] = [];
-    let firstDayOfWeek = getDayJST(contributions[0]?.date) ?? 0;
+    const firstContribution = contributions[0];
+    const firstDayOfWeek = firstContribution ? getDayJST(firstContribution.date) : 0;
 
     // 最初の週の前に空の日を追加
     for (let i = 0; i < firstDayOfWeek; i++) {
