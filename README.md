@@ -2,10 +2,10 @@
 
 A web application that integrates GitHub and GitLab contribution data and generates a 365-day contribution graph image.  
 
-<div align="center">
+<a href="https://contributions-status.vercel.app/" target="_blank">
   <img src="assets/screenshot.png" alt="Contributions Status" width="100%">
   <img src="assets/contributions.png" alt="Contributions Graph" width="100%">
-</div>
+</a>
 
 ## Features
 
