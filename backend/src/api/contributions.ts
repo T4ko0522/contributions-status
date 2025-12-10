@@ -42,9 +42,20 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     // グラフ画像を生成
     const imageBuffer = await graphGenerator.generateGraph(githubData, gitlabData, selectedTheme);
 
+    // デプロイごとにキャッシュを無効化するため、ETagにデプロイIDを含める
+    const deploymentId = process.env.VERCEL_DEPLOYMENT_ID || process.env.VERCEL_GIT_COMMIT_SHA || 'dev';
+    const etag = `"${deploymentId}-${imageBuffer.length}"`;
+    
+    // If-None-Matchヘッダーをチェックして304を返す
+    if (req.headers['if-none-match'] === etag) {
+      res.status(304).end();
+      return;
+    }
+
     // 画像として返す
     res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Cache-Control', 'public, max-age=3600'); // 1時間キャッシュ
+    res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate'); // 1時間キャッシュ、再検証必須
+    res.setHeader('ETag', etag);
     res.send(imageBuffer);
   } catch (error) {
     console.error('Contribution graph生成エラー:', error);
