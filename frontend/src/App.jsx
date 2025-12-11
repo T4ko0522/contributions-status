@@ -13,6 +13,32 @@ function App() {
   const [status, setStatus] = useState('loading')
   const backendUrl = import.meta.env.VITE_BACKEND_URL
   
+  // URLからユーザーネームを抽出する関数
+  const extractUsername = (input, type) => {
+    if (!input || !input.trim()) return input
+    
+    const trimmedInput = input.trim()
+    
+    if (type === 'github') {
+      // GitHub URLのパターン: https://github.com/username など
+      const githubPattern = /(?:https?:\/\/)?(?:www\.)?github\.com\/([^/?#\s]+)/
+      const match = trimmedInput.match(githubPattern)
+      if (match && match[1]) {
+        return match[1]
+      }
+    } else if (type === 'gitlab') {
+      // GitLab URLのパターン: https://gitlab.com/username など
+      const gitlabPattern = /(?:https?:\/\/)?(?:www\.)?gitlab\.com\/([^/?#\s]+)/
+      const match = trimmedInput.match(gitlabPattern)
+      if (match && match[1]) {
+        return match[1]
+      }
+    }
+    
+    // URLでない場合はそのまま返す
+    return trimmedInput
+  }
+  
   // URLパラメータから初期値を取得
   const searchParams = new URLSearchParams(window.location.search)
   const initialGithub = searchParams.get('github') || ''
@@ -24,11 +50,15 @@ function App() {
   const [theme, setTheme] = useState(initialTheme)
   const [generatedUrl, setGeneratedUrl] = useState(null)
   
-  // APIのURLを自動生成
+  // APIのURLを自動生成（URLからusernameを抽出してから生成）
   const generateGraphUrl = (gh, gl, th) => {
     const params = new URLSearchParams()
-    if (gh) params.append('github', gh)
-    if (gl) params.append('gitlab', gl)
+    // URLからusernameを抽出
+    const githubUsername = gh ? extractUsername(gh, 'github') : ''
+    const gitlabUsername = gl ? extractUsername(gl, 'gitlab') : ''
+    
+    if (githubUsername) params.append('github', githubUsername)
+    if (gitlabUsername) params.append('gitlab', gitlabUsername)
     if (th) params.append('theme', th)
     return `${backendUrl}/api/contributions?${params.toString()}`
   }
@@ -106,7 +136,7 @@ function App() {
                 type="text"
                 value={github}
                 onChange={(e) => setGithub(e.target.value)}
-                placeholder="GitHub username"
+                placeholder="GitHub username or URL"
                 style={{
                   padding: '8px 12px',
                   backgroundColor: '#0d1117',
@@ -124,7 +154,7 @@ function App() {
                 type="text"
                 value={gitlab}
                 onChange={(e) => setGitlab(e.target.value)}
-                placeholder="GitLab username"
+                placeholder="GitLab username or URL"
                 style={{
                   padding: '8px 12px',
                   backgroundColor: '#0d1117',
